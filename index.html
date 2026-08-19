@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baby Shower Salvador 🦕</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      color: #3d3025;
+      background-color: #e8f6fb;
+    }
+
+    /* ══ FONDO KAWAII ══ */
+    .bg-scene {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* ── página ── */
+    .page-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── botón mute ── */
+    .music-btn {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      z-index: 9999;
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4badd4, #6dc8e8);
+      border: 3px solid #fff;
+      box-shadow: 0 4px 18px rgba(75,173,212,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; cursor: pointer;
+      transition: transform 0.2s;
+      user-select: none;
+    }
+    .music-btn:hover  { transform: scale(1.08); }
+    .music-btn:active { transform: scale(0.94); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #b8dff0 0%, #d0ecf8 50%, #e0f4fc 100%);
+      border-radius: 32px;
+      padding: 40px 32px 36px;
+      text-align: center;
+      border: 2px solid #9dd0e8;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 32px rgba(100,170,200,0.18);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '🌿'; position: absolute;
+      top: 10px; left: 14px;
+      font-size: 36px; opacity: 0.28;
+      transform: rotate(-20deg);
+    }
+    .hero::after {
+      content: '🌿'; position: absolute;
+      top: 10px; right: 14px;
+      font-size: 36px; opacity: 0.28;
+      transform: rotate(20deg) scaleX(-1);
+    }
+
+    .dino-row {
+      display: flex; justify-content: center;
+      align-items: flex-end; gap: 8px;
+      margin-bottom: 16px; font-size: 52px; line-height: 1;
+    }
+    .dino-small { font-size: 36px; }
+
+    .badge {
+      display: inline-block;
+      background: #c8a97e; color: #fff;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 20px; margin-bottom: 14px;
+    }
+    .hero-title {
+      font-size: 58px; font-weight: 900; color: #1a6a8a;
+      line-height: 1.1; margin-bottom: 4px; letter-spacing: -1px;
+      text-shadow: 0 3px 0 rgba(255,255,255,0.65);
+    }
+    .hero-sub {
+      font-size: 16px; color: #3a8fa8; font-weight: 600;
+      margin-bottom: 18px; letter-spacing: 1px;
+    }
+    .parents {
+      display: inline-block;
+      background: rgba(255,255,255,0.82);
+      border: 1.5px solid #9dd0e8; border-radius: 50px;
+      padding: 8px 24px; font-size: 18px; font-weight: 700; color: #1a6a8a;
+    }
+    .parents-lbl {
+      font-size: 12px; color: #4a9ab0; font-weight: 600;
+      margin-top: 8px; letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: rgba(255,255,255,0.97);
+      border-radius: 24px; padding: 28px; margin-bottom: 18px;
+      border: 1.5px solid #c8e8f4;
+      box-shadow: 0 4px 16px rgba(100,170,200,0.10);
+    }
+    .card-ttl {
+      font-size: 11px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: #c8a97e;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card-ttl-line { flex: 1; height: 1.5px; background: #e0f0f8; }
+
+    /* ── MENSAJE / QUOTE ── */
+    .msg-txt {
+      font-size: 15px; line-height: 1.85; color: #4a3f35;
+      margin-bottom: 20px; text-align: center;
+    }
+    .quote-box {
+      background: linear-gradient(135deg, #1a6a8a 0%, #2a8aaa 100%);
+      border-radius: 20px; padding: 28px 22px 24px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .quote-box::before {
+      content: '"'; position: absolute;
+      top: -12px; left: 14px; font-size: 110px;
+      color: rgba(255,255,255,0.12); font-family: Georgia,serif; line-height:1;
+    }
+    .quote-dino { font-size: 30px; margin-bottom: 12px; }
+    .quote-txt {
+      font-style: italic; font-size: 17px; font-weight: 700;
+      color: #fff; line-height: 1.75; margin-bottom: 14px;
+      position: relative; z-index: 1;
+    }
+    .quote-auth {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      color: #c8e8f4; letter-spacing: 2px; text-transform: uppercase;
+      background: rgba(255,255,255,0.15); padding: 4px 14px; border-radius: 20px;
+    }
+    .msg-close {
+      font-size: 15px; line-height: 1.8; color: #4a3f35;
+      margin-top: 20px; text-align: center; font-weight: 600;
+    }
+
+    /* ── EVENTO ── */
+    .evt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .evt-cell {
+      background: linear-gradient(135deg,#eaf6fb,#f5fafc);
+      border-radius: 16px; padding: 16px;
+      border: 1px solid #c8e8f4; text-align: center;
+    }
+    .evt-cell-full { grid-column: 1/-1; }
+    .evt-icon { font-size: 28px; margin-bottom: 6px; display: block; }
+    .evt-lbl {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #6aacbf; margin-bottom: 4px;
+    }
+    .evt-val { font-size: 15px; font-weight: 700; color: #1a6a8a; line-height: 1.3; }
+    .evt-sub { font-size: 12px; color: #7a9faa; margin-top: 2px; }
+
+    /* ── LISTA DE REGALOS ── */
+    .gift-grid {
+      list-style: none;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    .gift-tile {
+      background: #f5ede0; border: 2px solid #e0d0b8;
+      border-radius: 14px; padding: 12px 14px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 600; color: #4a3f35;
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s, transform 0.12s;
+      user-select: none;
+    }
+    .gift-tile:hover:not(.taken) { background: #ffe8c8; border-color: #c8a97e; transform: translateY(-1px); }
+    .gift-tile.selected { background: #d4edda; border-color: #4caf70; color: #1a5c2a; }
+    /* tomado por alguien */
+    .gift-tile.taken {
+      background: #f0f0f0; border-color: #ccc;
+      color: #999; cursor: not-allowed; text-decoration: line-through;
+      opacity: 0.65;
+    }
+    .gift-ico { font-size: 20px; flex-shrink: 0; }
+    .taken-lbl {
+      font-size: 10px; font-weight: 700; color: #e07070;
+      margin-left: 4px; white-space: nowrap;
+    }
+    .gift-hint {
+      font-size: 12px; color: #7a6a5a;
+      margin-top: 12px; text-align: center; font-style: italic;
+    }
+
+    /* ── FORMULARIO COMBINADO ── */
+    .combo-card {
+      background: rgba(255,255,255,0.97);
+      border-radius: 24px; padding: 28px; margin-bottom: 18px;
+      border: 2px solid #c8a97e;
+      box-shadow: 0 4px 20px rgba(200,169,126,0.13);
+    }
+    .form-intro {
+      font-size: 14px; color: #5a4f45; line-height: 1.7;
+      margin-bottom: 20px; background: #fdf6ee;
+      border-radius: 12px; padding: 12px 16px;
+      border-left: 4px solid #c8a97e;
+    }
+    .form-div {
+      display: flex; align-items: center; gap: 12px;
+      margin: 22px 0; color: #b0a090;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+    }
+    .form-div::before, .form-div::after {
+      content:''; flex:1; height:1px; background:#e8ddd0;
+    }
+    .form-grp { margin-bottom: 16px; }
+    .form-lbl {
+      display: block; font-size: 12px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: #7a6a5a; margin-bottom: 6px;
+    }
+    .form-in, .form-sel {
+      width: 100%; padding: 12px 16px;
+      border: 1.5px solid #d8cfc4; border-radius: 12px;
+      font-size: 14px; font-family: inherit; color: #3d3025;
+      background: #fdfaf7; outline: none;
+      -webkit-appearance: none; appearance: none;
+    }
+    .form-in:focus, .form-sel:focus { border-color: #87c4dc; background: #fff; }
+    .sel-wrap { position: relative; }
+    .sel-wrap::after {
+      content: '▾'; position: absolute;
+      right: 14px; top: 50%; transform: translateY(-50%);
+      color: #888; pointer-events: none; font-size: 14px;
+    }
+    /* opción tomada en el select */
+    .form-sel option:disabled { color: #bbb; }
+
+    .btn-green {
+      width: 100%; display: flex; align-items: center;
+      justify-content: center; gap: 10px;
+      background: #25D366; color: #fff;
+      font-size: 15px; font-weight: 700;
+      padding: 15px 24px; border-radius: 50px; border: none;
+      cursor: pointer; margin-top: 6px;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.25);
+      font-family: inherit;
+    }
+    .btn-green:hover { background: #1fb85a; }
+    .btn-blue {
+      width: 100%; display: flex; align-items: center;
+      justify-content: center; gap: 10px;
+      background: #1a6a8a; color: #fff;
+      font-size: 15px; font-weight: 700;
+      padding: 15px 24px; border-radius: 50px; border: none;
+      cursor: pointer; text-decoration: none;
+      box-shadow: 0 4px 16px rgba(26,106,138,0.25);
+      font-family: inherit;
+    }
+    .btn-blue:hover { background: #155a75; }
+    .form-err {
+      display: none; color: #c0392b; font-size: 13px;
+      margin-top: 12px; padding: 10px 14px;
+      background: #fdf0ee; border-radius: 10px;
+      border-left: 3px solid #c0392b;
+    }
+    .rsvp-contact { margin-top: 12px; font-size: 13px; color: #7a9faa; text-align: center; }
+
+    .deco-ft { text-align: center; padding: 16px 0 0; font-size: 32px; letter-spacing: 8px; opacity: 0.40; }
+    .bob-ft { text-align: center; margin-top: 28px; padding-top: 14px; border-top: 1px solid #c8e8f4; font-size: 12px; color: #9ab8c4; }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 40px; }
+      .evt-grid { grid-template-columns: 1fr; }
+      .gift-grid { grid-template-columns: 1fr; }
+      .card, .combo-card { padding: 22px 18px; }
+      .hero { padding: 32px 20px 28px; }
+      .music-btn { bottom: 16px; right: 16px; width: 48px; height: 48px; font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     FONDO KAWAII — dibujos visibles y llamativos
+     ════════════════════════════════════════════ -->
+<div class="bg-scene" aria-hidden="true">
+
+  <!-- ▸ BRONTOSAURIO BEBÉ — izquierda arriba -->
+  <svg style="position:absolute;top:30px;left:-8px;width:140px;opacity:0.55;" viewBox="0 0 130 160" xmlns="http://www.w3.org/2000/svg">
+    <!-- cuello -->
+    <path d="M55 115 Q48 80 42 55 Q38 38 45 22" stroke="#7bc8e0" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <!-- cabeza -->
+    <ellipse cx="50" cy="16" rx="17" ry="14" fill="#7bc8e0"/>
+    <!-- ojo grande kawaii -->
+    <circle cx="44" cy="13" r="6" fill="white"/>
+    <circle cx="43" cy="13" r="3.5" fill="#2a3a50"/>
+    <circle cx="41" cy="11" r="1.2" fill="white"/>
+    <!-- mejilla -->
+    <ellipse cx="40" cy="19" rx="5" ry="3" fill="#f9a8b8" opacity="0.75"/>
+    <!-- nariz -->
+    <ellipse cx="56" cy="14" rx="3" ry="2" fill="#5ab0cc"/>
+    <!-- sonrisa -->
+    <path d="M44 20 Q50 25 56 20" stroke="#5ab0cc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <!-- orejita -->
+    <ellipse cx="51" cy="5" rx="5" ry="7" fill="#5ab0cc" transform="rotate(15 51 5)"/>
+    <!-- cuerpo redondo kawaii -->
+    <ellipse cx="68" cy="118" rx="36" ry="28" fill="#7bc8e0"/>
+    <!-- barriga más clara -->
+    <ellipse cx="64" cy="122" rx="20" ry="16" fill="#b8e8f8" opacity="0.6"/>
+    <!-- manchas espalda -->
+    <ellipse cx="78" cy="110" rx="8" ry="6" fill="#5ab0cc" opacity="0.4" transform="rotate(-20 78 110)"/>
+    <ellipse cx="85" cy="122" rx="6" ry="5" fill="#5ab0cc" opacity="0.4"/>
+    <!-- cola -->
+    <path d="M102 120 Q118 112 122 98 Q125 88 116 84" stroke="#7bc8e0" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <!-- patas -->
+    <ellipse cx="50" cy="142" rx="11" ry="7" fill="#5ab0cc"/>
+    <ellipse cx="74" cy="145" rx="11" ry="7" fill="#5ab0cc"/>
+    <ellipse cx="46" cy="147" rx="11" ry="7" fill="#5ab0cc"/>
+    <ellipse cx="70" cy="148" rx="11" ry="7" fill="#5ab0cc"/>
+  </svg>
+
+  <!-- ▸ HELECHOS — izquierda media -->
+  <svg style="position:absolute;top:220px;left:-4px;width:80px;opacity:0.50;" viewBox="0 0 80 160" xmlns="http://www.w3.org/2000/svg">
+    <line x1="40" y1="160" x2="40" y2="10" stroke="#4badd4" stroke-width="4"/>
+    <ellipse cx="22" cy="115" rx="20" ry="9" fill="#4badd4" transform="rotate(-40 22 115)"/>
+    <ellipse cx="57" cy="98"  rx="20" ry="9" fill="#4badd4" transform="rotate(40 57 98)"/>
+    <ellipse cx="20" cy="78"  rx="18" ry="8" fill="#4badd4" transform="rotate(-45 20 78)"/>
+    <ellipse cx="58" cy="62"  rx="17" ry="8" fill="#4badd4" transform="rotate(45 58 62)"/>
+    <ellipse cx="22" cy="46"  rx="15" ry="7" fill="#4badd4" transform="rotate(-40 22 46)"/>
+    <ellipse cx="56" cy="32"  rx="13" ry="6" fill="#4badd4" transform="rotate(40 56 32)"/>
+  </svg>
+
+  <!-- ▸ HUEVO azul — izquierda baja -->
+  <svg style="position:absolute;top:430px;left:6px;width:70px;opacity:0.50;" viewBox="0 0 70 88" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="35" cy="48" rx="28" ry="36" fill="#b8dff0"/>
+    <ellipse cx="35" cy="48" rx="28" ry="36" fill="none" stroke="#7bc8e0" stroke-width="2.5"/>
+    <ellipse cx="26" cy="36" rx="6" ry="4" fill="#7bc8e0" opacity="0.55" transform="rotate(-20 26 36)"/>
+    <ellipse cx="42" cy="58" rx="5" ry="3.5" fill="#7bc8e0" opacity="0.55" transform="rotate(15 42 58)"/>
+    <ellipse cx="28" cy="62" rx="5" ry="3.5" fill="#7bc8e0" opacity="0.45" transform="rotate(-10 28 62)"/>
+    <!-- carita kawaii en huevo -->
+    <circle cx="31" cy="44" r="2" fill="#5ab0cc"/>
+    <circle cx="39" cy="44" r="2" fill="#5ab0cc"/>
+    <path d="M29 50 Q35 55 41 50" stroke="#5ab0cc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  </svg>
+
+  <!-- ▸ HUELLAS DE DINO — izquierda baja -->
+  <svg style="position:absolute;top:580px;left:4px;width:70px;opacity:0.42;" viewBox="0 0 70 180" xmlns="http://www.w3.org/2000/svg">
+    <!-- huella 1 -->
+    <ellipse cx="32" cy="22" rx="10" ry="7" fill="#7bc8e0" transform="rotate(-20 32 22)"/>
+    <ellipse cx="18" cy="12" rx="5" ry="9" fill="#7bc8e0" transform="rotate(-40 18 12)"/>
+    <ellipse cx="28" cy="7"  rx="5" ry="9" fill="#7bc8e0" transform="rotate(-15 28 7)"/>
+    <ellipse cx="38" cy="9"  rx="5" ry="9" fill="#7bc8e0" transform="rotate(10 38 9)"/>
+    <!-- huella 2 -->
+    <ellipse cx="42" cy="85" rx="10" ry="7" fill="#c8a97e" transform="rotate(-20 42 85)"/>
+    <ellipse cx="28" cy="75" rx="5" ry="9" fill="#c8a97e" transform="rotate(-40 28 75)"/>
+    <ellipse cx="38" cy="70" rx="5" ry="9" fill="#c8a97e" transform="rotate(-15 38 70)"/>
+    <ellipse cx="48" cy="72" rx="5" ry="9" fill="#c8a97e" transform="rotate(10 48 72)"/>
+    <!-- huella 3 -->
+    <ellipse cx="25" cy="155" rx="10" ry="7" fill="#7bc8e0" transform="rotate(-20 25 155)"/>
+    <ellipse cx="11" cy="145" rx="5" ry="9" fill="#7bc8e0" transform="rotate(-40 11 145)"/>
+    <ellipse cx="21" cy="140" rx="5" ry="9" fill="#7bc8e0" transform="rotate(-15 21 140)"/>
+    <ellipse cx="31" cy="142" rx="5" ry="9" fill="#7bc8e0" transform="rotate(10 31 142)"/>
+  </svg>
+
+  <!-- ▸ T-REX BEBÉ — derecha arriba -->
+  <svg style="position:absolute;top:50px;right:-6px;width:130px;opacity:0.55;" viewBox="0 0 120 170" xmlns="http://www.w3.org/2000/svg">
+    <!-- cuerpo -->
+    <ellipse cx="55" cy="100" rx="32" ry="38" fill="#7bc8e0"/>
+    <!-- barriga -->
+    <ellipse cx="50" cy="108" rx="18" ry="22" fill="#b8e8f8" opacity="0.55"/>
+    <!-- cola gruesa -->
+    <path d="M84 110 Q104 102 110 86 Q114 74 104 68" stroke="#7bc8e0" stroke-width="15" fill="none" stroke-linecap="round"/>
+    <!-- cuello -->
+    <ellipse cx="46" cy="62" rx="18" ry="20" fill="#7bc8e0"/>
+    <!-- cabeza grande kawaii -->
+    <ellipse cx="42" cy="38" rx="26" ry="22" fill="#7bc8e0"/>
+    <!-- mandíbula inferior -->
+    <ellipse cx="42" cy="52" rx="18" ry="10" fill="#5ab0cc"/>
+    <!-- dientecitos kawaii -->
+    <polygon points="30,48 33,54 36,48" fill="white"/>
+    <polygon points="38,48 41,55 44,48" fill="white"/>
+    <polygon points="46,48 49,54 52,48" fill="white"/>
+    <!-- ojo kawaii grande -->
+    <circle cx="34" cy="32" r="8" fill="white"/>
+    <circle cx="33" cy="32" r="5" fill="#2a3a50"/>
+    <circle cx="31" cy="30" r="1.8" fill="white"/>
+    <!-- mejilla -->
+    <ellipse cx="26" cy="40" rx="7" ry="4" fill="#f9a8b8" opacity="0.72"/>
+    <!-- cuernito/cresta -->
+    <ellipse cx="52" cy="20" rx="5" ry="9" fill="#5ab0cc" transform="rotate(15 52 20)"/>
+    <!-- bracitos cortos kawaii -->
+    <path d="M26 88 Q14 82 12 90" stroke="#7bc8e0" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M26 96 Q13 93 12 102" stroke="#7bc8e0" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <!-- garras bracito -->
+    <line x1="12" y1="90" x2="8"  y2="87" stroke="#5ab0cc" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="12" y1="90" x2="10" y2="85" stroke="#5ab0cc" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- manchas cuerpo -->
+    <ellipse cx="60" cy="96"  rx="8" ry="6" fill="#5ab0cc" opacity="0.40" transform="rotate(-15 60 96)"/>
+    <ellipse cx="52" cy="112" rx="6" ry="5" fill="#5ab0cc" opacity="0.38"/>
+    <!-- patas -->
+    <ellipse cx="40" cy="136" rx="13" ry="8" fill="#5ab0cc"/>
+    <ellipse cx="64" cy="138" rx="13" ry="8" fill="#5ab0cc"/>
+    <!-- garras pata -->
+    <line x1="34" y1="143" x2="30" y2="148" stroke="#4a9ab0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="40" y1="144" x2="38" y2="150" stroke="#4a9ab0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="46" y1="143" x2="46" y2="149" stroke="#4a9ab0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="58" y1="145" x2="54" y2="150" stroke="#4a9ab0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="64" y1="146" x2="62" y2="151" stroke="#4a9ab0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="70" y1="145" x2="70" y2="150" stroke="#4a9ab0" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>
+
+  <!-- ▸ HUEVO tierra — derecha media-alta -->
+  <svg style="position:absolute;top:280px;right:8px;width:68px;opacity:0.50;" viewBox="0 0 70 88" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="35" cy="48" rx="28" ry="36" fill="#e8c99a"/>
+    <ellipse cx="35" cy="48" rx="28" ry="36" fill="none" stroke="#c8a97e" stroke-width="2.5"/>
+    <ellipse cx="26" cy="38" rx="6" ry="4" fill="#c8a97e" opacity="0.50" transform="rotate(-20 26 38)"/>
+    <ellipse cx="42" cy="58" rx="5" ry="3.5" fill="#c8a97e" opacity="0.50" transform="rotate(15 42 58)"/>
+    <ellipse cx="44" cy="36" rx="4" ry="3" fill="#c8a97e" opacity="0.40" transform="rotate(30 44 36)"/>
+    <!-- carita huevo -->
+    <circle cx="31" cy="44" r="2" fill="#a88060"/>
+    <circle cx="39" cy="44" r="2" fill="#a88060"/>
+    <path d="M29 51 Q35 56 41 51" stroke="#a88060" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  </svg>
+
+  <!-- ▸ STEGOSAURUS BEBÉ — derecha baja -->
+  <svg style="position:absolute;bottom:120px;right:-6px;width:145px;opacity:0.55;" viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg">
+    <!-- placas dorsales (tono tierra) -->
+    <polygon points="42,62 36,28 50,62" fill="#e8a87a"/>
+    <polygon points="58,56 52,20 66,56" fill="#e0c080"/>
+    <polygon points="74,58 68,22 80,58" fill="#e8a87a"/>
+    <polygon points="88,64 82,32 94,64" fill="#e0c080"/>
+    <!-- cuerpo redondo kawaii -->
+    <ellipse cx="68" cy="88" rx="44" ry="28" fill="#7bc8e0"/>
+    <!-- barriga -->
+    <ellipse cx="64" cy="94" rx="26" ry="16" fill="#b8e8f8" opacity="0.55"/>
+    <!-- cabeza redondeada -->
+    <ellipse cx="24" cy="76" rx="20" ry="17" fill="#7bc8e0"/>
+    <!-- ojo kawaii -->
+    <circle cx="18" cy="72" r="6" fill="white"/>
+    <circle cx="17" cy="72" r="3.5" fill="#2a3a50"/>
+    <circle cx="15" cy="70" r="1.2" fill="white"/>
+    <!-- mejilla -->
+    <ellipse cx="14" cy="78" rx="5.5" ry="3" fill="#f9a8b8" opacity="0.72"/>
+    <!-- nariz -->
+    <ellipse cx="8" cy="75" rx="3.5" ry="2.5" fill="#5ab0cc"/>
+    <!-- cola con punta -->
+    <path d="M110 88 Q128 80 134 66" stroke="#7bc8e0" stroke-width="13" fill="none" stroke-linecap="round"/>
+    <polygon points="133,63 140,58 136,70" fill="#5ab0cc"/>
+    <!-- patas -->
+    <ellipse cx="42"  cy="114" rx="11" ry="7" fill="#5ab0cc"/>
+    <ellipse cx="62"  cy="116" rx="11" ry="7" fill="#5ab0cc"/>
+    <ellipse cx="80"  cy="115" rx="11" ry="7" fill="#5ab0cc"/>
+    <ellipse cx="96"  cy="113" rx="11" ry="7" fill="#5ab0cc"/>
+  </svg>
+
+  <!-- ▸ HELECHOS — derecha baja -->
+  <svg style="position:absolute;bottom:40px;right:-4px;width:80px;opacity:0.50;" viewBox="0 0 80 160" xmlns="http://www.w3.org/2000/svg">
+    <line x1="40" y1="160" x2="40" y2="10" stroke="#4badd4" stroke-width="4"/>
+    <ellipse cx="22" cy="115" rx="20" ry="9" fill="#4badd4" transform="rotate(-40 22 115)"/>
+    <ellipse cx="57" cy="98"  rx="20" ry="9" fill="#4badd4" transform="rotate(40 57 98)"/>
+    <ellipse cx="20" cy="78"  rx="18" ry="8" fill="#4badd4" transform="rotate(-45 20 78)"/>
+    <ellipse cx="58" cy="62"  rx="17" ry="8" fill="#4badd4" transform="rotate(45 58 62)"/>
+    <ellipse cx="22" cy="46"  rx="15" ry="7" fill="#4badd4" transform="rotate(-40 22 46)"/>
+    <ellipse cx="56" cy="32"  rx="13" ry="6" fill="#4badd4" transform="rotate(40 56 32)"/>
+  </svg>
+
+  <!-- ▸ FLOR / ESTRELLA kawaii — izquierda media-alta -->
+  <svg style="position:absolute;top:360px;left:4px;width:62px;opacity:0.48;" viewBox="0 0 62 62" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="31" cy="10" rx="8" ry="12" fill="#f9d878"/>
+    <ellipse cx="31" cy="52" rx="8" ry="12" fill="#f9d878"/>
+    <ellipse cx="10" cy="31" rx="12" ry="8" fill="#f9d878"/>
+    <ellipse cx="52" cy="31" rx="12" ry="8" fill="#f9d878"/>
+    <ellipse cx="16" cy="16" rx="8" ry="12" fill="#f9d878" transform="rotate(45 16 16)"/>
+    <ellipse cx="46" cy="16" rx="8" ry="12" fill="#f9d878" transform="rotate(-45 46 16)"/>
+    <ellipse cx="16" cy="46" rx="8" ry="12" fill="#f9d878" transform="rotate(-45 16 46)"/>
+    <ellipse cx="46" cy="46" rx="8" ry="12" fill="#f9d878" transform="rotate(45 46 46)"/>
+    <circle cx="31" cy="31" r="13" fill="#fce99a"/>
+    <circle cx="27" cy="28" r="2" fill="#8a7030"/>
+    <circle cx="35" cy="28" r="2" fill="#8a7030"/>
+    <path d="M26 34 Q31 39 36 34" stroke="#8a7030" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  </svg>
+
+  <!-- ▸ NUBE suave — centro arriba -->
+  <svg style="position:absolute;top:6px;left:50%;transform:translateX(-50%);width:220px;opacity:0.22;" viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="90"  cy="55" rx="68" ry="32" fill="#ffffff"/>
+    <ellipse cx="90"  cy="38" rx="45" ry="28" fill="#ffffff"/>
+    <ellipse cx="55"  cy="50" rx="34" ry="24" fill="#ffffff"/>
+    <ellipse cx="130" cy="47" rx="40" ry="25" fill="#ffffff"/>
+  </svg>
+
+</div>
+<!-- /bg-scene -->
+
+<!-- ══ AUDIO ══ -->
+<div class="music-btn" id="music-btn" title="Silenciar / Activar música">🔊</div>
+<audio id="bg-music" loop autoplay>
+  <source src="jurassic-park-theme.mp3" type="audio/mpeg" />
+</audio>
+
+<!-- ══ CONTENIDO ══ -->
+<div class="page-wrapper">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="dino-row">
+      <span class="dino-small">🦕</span>
+      <span>🦖</span>
+      <span class="dino-small">🦕</span>
+    </div>
+    <div class="badge">Baby Shower</div>
+    <div class="hero-title">Salvador</div>
+    <div class="hero-sub">¡Está en camino! 💙</div>
+    <div class="parents">Jose Luis &amp; Johanna</div>
+    <div class="parents-lbl">Te invitan a celebrar</div>
+  </div>
+
+  <!-- MENSAJE -->
+  <div class="card">
+    <div class="card-ttl">🦕 Un mensaje de los papás <div class="card-ttl-line"></div></div>
+    <p class="msg-txt">
+      Con inmensa alegría queremos invitarte a celebrar la próxima llegada de nuestro bebé,
+      un acontecimiento que llena nuestros días de amor y esperanza.
+    </p>
+    <div class="quote-box">
+      <div class="quote-dino">🦕</div>
+      <p class="quote-txt">
+        "Hay dos maneras de vivir la vida: una es como si nada fuera un milagro;
+        la otra es como si todo fuera un milagro."
+      </p>
+      <span class="quote-auth">— Albert Einstein</span>
+    </div>
+    <p class="msg-close">¡Nos encantará compartir este momento tan especial contigo! 💙</p>
+  </div>
+
+  <!-- EVENTO -->
+  <div class="card">
+    <div class="card-ttl">📅 Detalles del evento <div class="card-ttl-line"></div></div>
+    <div class="evt-grid">
+      <div class="evt-cell">
+        <span class="evt-icon">🗓️</span>
+        <div class="evt-lbl">Fecha</div>
+        <div class="evt-val">Domingo<br>27 de Septiembre</div>
+      </div>
+      <div class="evt-cell">
+        <span class="evt-icon">⏰</span>
+        <div class="evt-lbl">Hora</div>
+        <div class="evt-val">3:00 PM</div>
+        <div class="evt-sub">¡No llegues tarde!</div>
+      </div>
+      <div class="evt-cell evt-cell-full">
+        <span class="evt-icon">📍</span>
+        <div class="evt-lbl">Lugar</div>
+        <div class="evt-val">Salón Comunal Barrio La Española</div>
+        <div class="evt-sub">Cl. 83 #85a-17, Bogotá</div>
+        <div class="evt-sub" style="margin-top:8px;">
+          <a href="https://maps.app.goo.gl/WoDnhYoA54VsiBFq8" target="_blank"
+             style="color:#1a6a8a;font-weight:700;text-decoration:none;">📌 Ver en Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LISTA DE REGALOS -->
+  <div class="card">
+    <div class="card-ttl">🎁 Lista de regalos <div class="card-ttl-line"></div></div>
+    <ul class="gift-grid" id="gift-list">
+      <li class="gift-tile" data-value="Luz nocturna para habitación del bebé"><span class="gift-ico">🌙</span><span>Luz nocturna habitación</span></li>
+      <li class="gift-tile" data-value="Almohada de lactancia"><span class="gift-ico">🤱</span><span>Almohada de lactancia</span></li>
+      <li class="gift-tile" data-value="Set de teteros antirreflujo"><span class="gift-ico">🍼</span><span>Teteros antirreflujo (set)</span></li>
+      <li class="gift-tile" data-value="Mamelucos / Semanario"><span class="gift-ico">👶</span><span>Mamelucos / Semanario</span></li>
+      <li class="gift-tile" data-value="Set de ropa talla 0-3 meses"><span class="gift-ico">👕</span><span>Ropa talla 0–3 meses</span></li>
+      <li class="gift-tile" data-value="Set de ropa talla 3-6 meses"><span class="gift-ico">👕</span><span>Ropa talla 3–6 meses</span></li>
+      <li class="gift-tile" data-value="Set de ropa talla 6-9 meses"><span class="gift-ico">👕</span><span>Ropa talla 6–9 meses</span></li>
+      <li class="gift-tile" data-value="Cargador ergonómico de bebé (portabebé)"><span class="gift-ico">🎒</span><span>Cargador ergonómico</span></li>
+      <li class="gift-tile" data-value="Pañalera con cambiador"><span class="gift-ico">👜</span><span>Pañalera con cambiador</span></li>
+      <li class="gift-tile" data-value="Esterilizador de teteros"><span class="gift-ico">♻️</span><span>Esterilizador de teteros</span></li>
+      <li class="gift-tile" data-value="Tapete de juegos"><span class="gift-ico">🧸</span><span>Tapete de juegos</span></li>
+      <li class="gift-tile" data-value="Gimnasio de actividades para bebé"><span class="gift-ico">🎠</span><span>Gimnasio de actividades</span></li>
+      <li class="gift-tile" data-value="Nido reductor portátil para bebé"><span class="gift-ico">🛏️</span><span>Nido reductor portátil</span></li>
+      <li class="gift-tile" data-value="Primera Muda"><span class="gift-ico">✨</span><span>Primera Muda</span></li>
+    </ul>
+    <p class="gift-hint">👆 Toca un regalo para seleccionarlo. Los regalos ya escogidos aparecen deshabilitados.</p>
+  </div>
+
+  <!-- CONFIRMACIÓN -->
+  <div class="combo-card">
+    <div class="card-ttl">🦕 Confirma tu asistencia y escoge tu regalo <div class="card-ttl-line"></div></div>
+    <div class="form-intro">
+      Para evitar regalos repetidos, completa tu información y selecciona el regalo que llevarás a Salvador.
+      Al confirmar, Johanna recibirá un WhatsApp con tu elección y ese regalo quedará marcado como tomado. 🦕
+    </div>
+
+    <div class="form-grp">
+      <label class="form-lbl" for="guest-name">Tu nombre completo</label>
+      <input class="form-in" type="text" id="guest-name" placeholder="Ej: María González" autocomplete="name" />
+    </div>
+    <div class="form-grp">
+      <label class="form-lbl" for="guest-phone">Tu número de teléfono</label>
+      <input class="form-in" type="tel" id="guest-phone" placeholder="Ej: 3001234567" autocomplete="tel" />
+    </div>
+    <div class="form-grp">
+      <label class="form-lbl" for="gift-select">Regalo que llevarás</label>
+      <div class="sel-wrap">
+        <select class="form-sel" id="gift-select">
+          <option value="">— Selecciona o toca uno de arriba —</option>
+          <option value="Luz nocturna para habitación del bebé">🌙 Luz nocturna habitación bebé</option>
+          <option value="Almohada de lactancia">🤱 Almohada de lactancia</option>
+          <option value="Set de teteros antirreflujo">🍼 Teteros antirreflujo (set)</option>
+          <option value="Mamelucos / Semanario">👶 Mamelucos / Semanario</option>
+          <option value="Set de ropa talla 0-3 meses">👕 Set de ropa talla 0–3 meses</option>
+          <option value="Set de ropa talla 3-6 meses">👕 Set de ropa talla 3–6 meses</option>
+          <option value="Set de ropa talla 6-9 meses">👕 Set de ropa talla 6–9 meses</option>
+          <option value="Cargador ergonómico de bebé (portabebé)">🎒 Cargador ergonómico de bebé</option>
+          <option value="Pañalera con cambiador">👜 Pañalera con cambiador</option>
+          <option value="Esterilizador de teteros">♻️ Esterilizador de teteros</option>
+          <option value="Tapete de juegos">🧸 Tapete de juegos</option>
+          <option value="Gimnasio de actividades para bebé">🎠 Gimnasio de actividades para bebé</option>
+          <option value="Nido reductor portátil para bebé">🛏️ Nido reductor portátil para bebé</option>
+          <option value="Primera Muda">✨ Primera Muda</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-err" id="form-err">⚠️ Por favor completa tu nombre, teléfono y selecciona un regalo antes de continuar.</div>
+    <button class="btn-green" id="send-btn" type="button">💬 Confirmar asistencia y notificar regalo</button>
+
+    <div class="form-div">o solo confirma asistencia</div>
+    <a class="btn-blue" href="https://wa.me/573196327116?text=Hola%20Johanna!%20Confirmo%20mi%20asistencia%20al%20Baby%20Shower%20de%20Salvador%20%F0%9F%A6%95">
+      ✅ Solo confirmar asistencia
+    </a>
+    <div class="rsvp-contact">Johanna Castillo · +57 319 632 7116</div>
+  </div>
+
+  <div class="deco-ft">🦕 🥚 🦖 🥚 🦕</div>
+  <div class="bob-ft">Made with IBM Bob</div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   MÚSICA: autoplay 60%, botón mute flotante
+══════════════════════════════════════════ */
+var musicBtn = document.getElementById('music-btn');
+var bgMusic  = document.getElementById('bg-music');
+var muted    = false;
+
+bgMusic.volume = 0.6;
+bgMusic.play().catch(function () { musicBtn.textContent = '🔇'; muted = true; });
+
+musicBtn.addEventListener('click', function () {
+  if (muted) { bgMusic.volume = 0.6; bgMusic.play(); musicBtn.textContent = '🔊'; muted = false; }
+  else        { bgMusic.pause(); musicBtn.textContent = '🔇'; muted = true; }
+});
+
+/* ══════════════════════════════════════════
+   REGALOS TOMADOS — API Upstash via Vercel
+══════════════════════════════════════════ */
+var giftTiles  = document.querySelectorAll('#gift-list .gift-tile');
+var giftSelect = document.getElementById('gift-select');
+
+/* Aplica visualmente el estado "tomado" a un array de valores */
+function applyTakenState(taken) {
+  var select = document.getElementById('gift-select');
+
+  giftTiles.forEach(function (tile) {
+    var val = tile.getAttribute('data-value');
+    if (taken.indexOf(val) !== -1) {
+      tile.classList.add('taken');
+      tile.classList.remove('selected');
+      if (!tile.querySelector('.taken-lbl')) {
+        var lbl = document.createElement('span');
+        lbl.className = 'taken-lbl';
+        lbl.textContent = '✓ Ya elegido';
+        tile.appendChild(lbl);
+      }
+    }
+  });
+
+  // Deshabilitar opciones del select que ya fueron tomadas
+  Array.from(select.options).forEach(function (opt) {
+    if (opt.value && taken.indexOf(opt.value) !== -1 && !opt.disabled) {
+      opt.disabled = true;
+      opt.text = opt.text + ' (ya elegido)';
+    }
+  });
+}
+
+/* Carga los regalos tomados desde la API al abrir la página */
+function loadTakenGifts() {
+  fetch('/api/get-gifts')
+    .then(function (r) { return r.json(); })
+    .then(function (data) { applyTakenState(data.taken || []); })
+    .catch(function () { /* si falla la API, la lista se muestra completa */ });
+}
+
+/* ══════════════════════════════════════════
+   INTERACCIÓN: clic en tile → llena select
+══════════════════════════════════════════ */
+giftTiles.forEach(function (tile) {
+  tile.addEventListener('click', function () {
+    if (tile.classList.contains('taken')) return;
+    giftTiles.forEach(function (t) { t.classList.remove('selected'); });
+    tile.classList.add('selected');
+    giftSelect.value = tile.getAttribute('data-value');
+    document.querySelector('.combo-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+});
+
+giftSelect.addEventListener('change', function () {
+  var val = giftSelect.value;
+  giftTiles.forEach(function (t) {
+    if (!t.classList.contains('taken'))
+      t.classList.toggle('selected', t.getAttribute('data-value') === val);
+  });
+});
+
+/* ══════════════════════════════════════════
+   ENVIAR: guardar en API + abrir WhatsApp
+══════════════════════════════════════════ */
+document.getElementById('send-btn').addEventListener('click', function () {
+  var name    = document.getElementById('guest-name').value.trim();
+  var phone   = document.getElementById('guest-phone').value.trim();
+  var gift    = giftSelect.value;
+  var errEl   = document.getElementById('form-err');
+  var sendBtn = document.getElementById('send-btn');
+
+  if (!name || !phone || !gift) { errEl.style.display = 'block'; return; }
+  errEl.style.display = 'none';
+
+  // Deshabilitar botón mientras se guarda
+  sendBtn.disabled = true;
+  sendBtn.textContent = '⏳ Guardando...';
+
+  // 1. Guardar en la API (Upstash via Vercel)
+  fetch('/api/take-gift', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ gift: gift })
+  })
+  .then(function (r) { return r.json(); })
+  .then(function () {
+    // 2. Actualizar UI: marcar como tomado
+    applyTakenState([gift]);
+
+    // 3. Limpiar selección y campos
+    giftTiles.forEach(function (t) { t.classList.remove('selected'); });
+    giftSelect.value = '';
+    document.getElementById('guest-name').value  = '';
+    document.getElementById('guest-phone').value = '';
+
+    // 4. Restaurar botón
+    sendBtn.disabled = false;
+    sendBtn.textContent = '💬 Confirmar asistencia y notificar regalo';
+
+    // 5. Abrir WhatsApp
+    var msg = '🦕 *Baby Shower de Salvador* 🦕\n\n'
+            + '¡Hola Johanna! Te confirmo mi asistencia al evento y te informo mi selección de regalo:\n\n'
+            + '👤 *Nombre:* ' + name + '\n'
+            + '📱 *Teléfono:* ' + phone + '\n'
+            + '🎁 *Regalo:* ' + gift + '\n\n'
+            + '¡Nos vemos el 27 de Septiembre! 💙🦕';
+
+    window.open('https://wa.me/573196327116?text=' + encodeURIComponent(msg), '_blank');
+  })
+  .catch(function () {
+    // Si falla la API igual abre WhatsApp (no bloqueamos al invitado)
+    sendBtn.disabled = false;
+    sendBtn.textContent = '💬 Confirmar asistencia y notificar regalo';
+
+    var msg = '🦕 *Baby Shower de Salvador* 🦕\n\n'
+            + '¡Hola Johanna! Te confirmo mi asistencia al evento y te informo mi selección de regalo:\n\n'
+            + '👤 *Nombre:* ' + name + '\n'
+            + '📱 *Teléfono:* ' + phone + '\n'
+            + '🎁 *Regalo:* ' + gift + '\n\n'
+            + '¡Nos vemos el 27 de Septiembre! 💙🦕';
+
+    window.open('https://wa.me/573196327116?text=' + encodeURIComponent(msg), '_blank');
+  });
+});
+
+/* Cargar regalos tomados al iniciar */
+loadTakenGifts();
+</script>
+</body>
+</html>
