@@ -746,7 +746,7 @@ document.getElementById('send-btn').addEventListener('click', function () {
   fetch('/api/take-gift', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ gift: gift })
+    body: JSON.stringify({ gift: gift, name: name, phone: phone })
   })
   .then(function (r) { return r.json(); })
   .then(function () {
