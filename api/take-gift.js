@@ -1,5 +1,5 @@
 // api/take-gift.js
-// Marca un regalo como tomado guardándolo en Upstash Redis
+// Marca un regalo como tomado y guarda nombre + teléfono + regalo en Upstash Redis
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  const { gift } = req.body;
+  const { gift, name, phone } = req.body;
 
   if (!gift || typeof gift !== 'string' || gift.trim() === '') {
     res.status(400).json({ error: 'El campo gift es requerido' });
@@ -23,18 +23,37 @@ export default async function handler(req, res) {
     const url   = process.env.UPSTASH_REDIS_REST_URL;
     const token = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-    // SADD agrega el regalo al set "taken_gifts"
-    // Si ya existe, Redis lo ignora (no hay duplicados en un set)
-    const response = await fetch(`${url}/sadd/taken_gifts/${encodeURIComponent(gift.trim())}`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}` }
+    const giftClean = gift.trim();
+    const timestamp = new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+
+    // Registro completo del invitado
+    const entry = JSON.stringify({
+      gift:  giftClean,
+      name:  (name  || '').trim(),
+      phone: (phone || '').trim(),
+      date:  timestamp
     });
 
-    if (!response.ok) {
-      throw new Error('Error en Upstash');
-    }
+    // Pipeline: ejecuta dos comandos en una sola petición
+    // 1. SADD taken_gifts <regalo>  → marca el regalo como tomado
+    // 2. HSET registry <regalo> <entry>  → guarda el registro completo
+    const pipeline = [
+      ['sadd', 'taken_gifts', giftClean],
+      ['hset', 'registry',    giftClean, entry]
+    ];
 
-    res.status(200).json({ ok: true, gift: gift.trim() });
+    const response = await fetch(`${url}/pipeline`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(pipeline)
+    });
+
+    if (!response.ok) throw new Error('Error en Upstash');
+
+    res.status(200).json({ ok: true, gift: giftClean });
   } catch (err) {
     res.status(500).json({ ok: false, error: 'Error al guardar el regalo' });
   }

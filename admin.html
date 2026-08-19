@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Regalos — Baby Shower Salvador</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #e8f6fb;
+      min-height: 100vh;
+      color: #3d3025;
+      padding: 24px 16px 48px;
+    }
+
+    .wrapper {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, #1a6a8a, #2a8aaa);
+      border-radius: 20px;
+      padding: 28px 28px;
+      color: #fff;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .header-title { font-size: 22px; font-weight: 800; }
+    .header-sub   { font-size: 13px; opacity: 0.80; margin-top: 4px; }
+
+    .badge-total {
+      background: rgba(255,255,255,0.18);
+      border: 1.5px solid rgba(255,255,255,0.35);
+      border-radius: 50px;
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* ── ACCIONES ── */
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: none;
+    }
+    .btn-refresh { background: #1a6a8a; color: #fff; }
+    .btn-reset   { background: #e07070; color: #fff; }
+    .btn-refresh:hover { background: #155a75; }
+    .btn-reset:hover   { background: #c85050; }
+
+    /* ── TABLA ── */
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      border: 1.5px solid #c8e8f4;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(100,170,200,0.10);
+    }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    thead {
+      background: #eaf6fb;
+    }
+
+    thead th {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #1a6a8a;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-top: 1px solid #e8f4fb;
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: #f5fafc; }
+
+    tbody td {
+      padding: 14px 18px;
+      color: #3d3025;
+      vertical-align: middle;
+    }
+
+    .td-gift {
+      font-weight: 700;
+      color: #1a6a8a;
+    }
+
+    .td-name  { font-weight: 600; }
+    .td-phone { color: #4a9ab0; font-family: monospace; font-size: 13px; }
+    .td-date  { color: #9ab8c4; font-size: 12px; white-space: nowrap; }
+
+    .wa-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #25D366;
+      color: #fff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* ── EMPTY ── */
+    .empty {
+      padding: 48px 24px;
+      text-align: center;
+      color: #9ab8c4;
+    }
+    .empty-icon { font-size: 48px; margin-bottom: 12px; }
+    .empty-text { font-size: 15px; }
+
+    /* ── LOADING ── */
+    .loading {
+      padding: 48px 24px;
+      text-align: center;
+      color: #9ab8c4;
+      font-size: 15px;
+    }
+
+    /* ── PROGRESO ── */
+    .progress-card {
+      background: #fff;
+      border-radius: 20px;
+      border: 1.5px solid #c8e8f4;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(100,170,200,0.10);
+    }
+    .progress-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #c8a97e;
+      margin-bottom: 12px;
+    }
+    .progress-bar-bg {
+      background: #e8f4fb;
+      border-radius: 10px;
+      height: 14px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #1a6a8a, #4badd4);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+    .progress-label {
+      font-size: 13px;
+      color: #4a9ab0;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 12px;
+      color: #9ab8c4;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="header-title">🦕 Registro de Regalos</div>
+      <div class="header-sub">Baby Shower de Salvador — Jose Luis &amp; Johanna</div>
+    </div>
+    <div class="badge-total" id="badge-total">Cargando...</div>
+  </div>
+
+  <!-- ACCIONES -->
+  <div class="actions">
+    <button class="btn btn-refresh" id="btn-refresh">🔄 Actualizar</button>
+    <button class="btn btn-reset"   id="btn-reset">🗑️ Limpiar base de datos</button>
+  </div>
+
+  <!-- BARRA DE PROGRESO -->
+  <div class="progress-card">
+    <div class="progress-title">📊 Progreso de regalos</div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div class="progress-label" id="progress-label">0 de 14 regalos asignados</div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>🎁 Regalo</th>
+            <th>👤 Invitado</th>
+            <th>📱 Teléfono</th>
+            <th>📅 Fecha y hora</th>
+            <th>WhatsApp</th>
+          </tr>
+        </thead>
+        <tbody id="registry-body">
+          <tr>
+            <td colspan="6">
+              <div class="loading">⏳ Cargando registro...</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">Made with IBM Bob · Solo visible para administradores</div>
+</div>
+
+<script>
+  var TOTAL_GIFTS = 14;
+  var SECRET_KEY  = 'salvador2025';
+
+  function loadRegistry() {
+    document.getElementById('badge-total').textContent = 'Cargando...';
+
+    fetch('/api/get-registry?key=' + SECRET_KEY)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        renderTable(data.registry || []);
+      })
+      .catch(function () {
+        document.getElementById('registry-body').innerHTML =
+          '<tr><td colspan="6"><div class="empty"><div class="empty-icon">⚠️</div><div class="empty-text">Error al cargar el registro</div></div></td></tr>';
+      });
+  }
+
+  function renderTable(registry) {
+    var total = registry.length;
+    var pct   = Math.round((total / TOTAL_GIFTS) * 100);
+
+    // Badge
+    document.getElementById('badge-total').textContent = total + ' de ' + TOTAL_GIFTS + ' regalos asignados';
+
+    // Progreso
+    document.getElementById('progress-fill').style.width  = pct + '%';
+    document.getElementById('progress-label').textContent = total + ' de ' + TOTAL_GIFTS + ' regalos asignados (' + pct + '%)';
+
+    // Tabla
+    var tbody = document.getElementById('registry-body');
+
+    if (total === 0) {
+      tbody.innerHTML = '<tr><td colspan="6"><div class="empty"><div class="empty-icon">🎁</div><div class="empty-text">Aún no hay regalos registrados</div></div></td></tr>';
+      return;
+    }
+
+    var html = '';
+    registry.forEach(function (entry, i) {
+      var phone   = entry.phone || '—';
+      var name    = entry.name  || '—';
+      var waPhone = phone.replace(/\D/g, '');
+      var waLink  = waPhone.length >= 7
+        ? '<a class="wa-link" href="https://wa.me/57' + waPhone + '" target="_blank">💬 WA</a>'
+        : '—';
+
+      html += '<tr>'
+        + '<td>' + (i + 1) + '</td>'
+        + '<td class="td-gift">' + escHtml(entry.gift || '—') + '</td>'
+        + '<td class="td-name">'  + escHtml(name)  + '</td>'
+        + '<td class="td-phone">' + escHtml(phone) + '</td>'
+        + '<td class="td-date">'  + escHtml(entry.date || '—') + '</td>'
+        + '<td>' + waLink + '</td>'
+        + '</tr>';
+    });
+
+    tbody.innerHTML = html;
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  document.getElementById('btn-refresh').addEventListener('click', loadRegistry);
+
+  document.getElementById('btn-reset').addEventListener('click', function () {
+    if (!confirm('⚠️ ¿Estás seguro de que quieres borrar todos los registros?\nEsta acción no se puede deshacer.')) return;
+
+    fetch('/api/reset-gifts?key=' + SECRET_KEY)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.ok) {
+          alert('✅ Base de datos limpiada correctamente.');
+          loadRegistry();
+        } else {
+          alert('❌ Error al limpiar: ' + (data.error || 'desconocido'));
+        }
+      })
+      .catch(function () { alert('❌ Error de conexión'); });
+  });
+
+  // Cargar al iniciar
+  loadRegistry();
+</script>
+</body>
+</html>
